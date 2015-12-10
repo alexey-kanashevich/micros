@@ -1,0 +1,67 @@
+apply plugin: 'idea'
+apply plugin: 'maven'
+
+idea {
+    project {
+        jdkName = '1.8'
+        languageLevel = '1.8'
+        vcs = 'Git'
+    }
+    module {
+        name = "micros"
+    }
+}
+buildscript {
+    repositories {
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+        classpath "com.github.jengelman.gradle.plugins:shadow:1.2.2"
+    }
+}
+
+subprojects {
+    apply plugin: 'maven'
+    apply plugin: 'java'
+    apply plugin: 'groovy'
+    apply plugin: "com.github.johnrengelman.shadow"
+
+    group 'com.mm.platform'
+    version '1.0-SNAPSHOT'
+    repositories {
+        mavenLocal()
+        mavenCentral()
+        jcenter()
+        maven {
+            url "http://demostend2.minsk.moneyman.ru/nexus/content/repositories/snapshots/"
+        }
+    }
+
+    configurations {
+        compile.exclude group: "org.slf4j", module: "slf4j-jdk14"
+        compile.exclude group: "org.slf4j", module: "slf4j-log4j12"
+    }
+
+    dependencies {
+        compile "org.apache.logging.log4j:log4j-api:${log4j2Version}"
+        compile "org.apache.logging.log4j:log4j-core:${log4j2Version}"
+        compile "org.apache.logging.log4j:log4j-jcl:${log4j2Version}"
+        compile 'com.google.guava:guava:19.0-rc2'
+        compile "org.apache.commons:commons-lang3:3.4"
+        testCompile "junit:junit:${junitVersion}"
+        testCompile "org.mockito:mockito-core:1.+"
+        testCompile "pl.pragmatists:JUnitParams:1.0.4"
+        testCompile "org.assertj:assertj-core:3.2.0"
+        testCompile "org.springframework:spring-test:${springVersion}"
+        testCompile 'com.jayway.restassured:rest-assured:2.7.0'
+        testCompile 'com.jayway.restassured:json-path:2.7.0'
+        testCompile 'com.jayway.restassured:spring-mock-mvc:2.7.0'
+        testCompile 'com.jayway.awaitility:awaitility:1.7.0'
+        //compile 'org.codehaus.groovy:groovy:2.3.9'
+    }
+}
+
+
+

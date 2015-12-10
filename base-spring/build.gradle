@@ -1,0 +1,15 @@
+dependencies {
+    compile "com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.4.4"
+    compile "com.fasterxml.jackson.core:jackson-databind:2.4.4"
+    compile "org.apache.logging.log4j:log4j-web:${log4j2Version}"
+    compile ("org.springframework:spring-context:${springVersion}") {
+        exclude (group: 'commons-logging', module: 'commons-logging')
+    }
+    compile "org.springframework:spring-webmvc:${springVersion}"
+
+    compile "org.aspectj:aspectjrt:${aspectjVersion}"
+    compile "org.aspectj:aspectjweaver:${aspectjVersion}"
+    compile "org.eclipse.jetty:jetty-servlet:${jettyVersion}"
+
+    testCompile "org.springframework:spring-test:${springVersion}"
+}

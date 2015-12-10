@@ -1,0 +1,53 @@
+Configuration:
+  status: info
+
+  Appenders:
+    Console:
+      name: CONSOLE
+      target: SYSTEM_OUT
+      PatternLayout:
+        Pattern: "%highlight{%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n}"
+    RollingRandomAccessFile:
+      - name: PAYLOAD
+        fileName: logs/payload.log
+        filePattern: "logs/$${date:yyyy-MM}/payload-%d{MM-dd-yyyy}-%i.log.gz"
+        PatternLayout:
+          Pattern: "%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"
+        Policies:
+          SizeBasedTriggeringPolicy:
+            size: 1 MB
+      - name: APPLICATION
+        fileName: logs/application.log
+        filePattern: "logs/$${date:yyyy-MM}/application-%d{MM-dd-yyyy}-%i.log.gz"
+        PatternLayout:
+          Pattern: "%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"
+        Policies:
+          SizeBasedTriggeringPolicy:
+            size: 1 MB
+
+
+
+  Loggers:
+    Root:
+      level: info
+      AppenderRef:
+        - ref: CONSOLE
+        - ref: PAYLOAD
+        - ref: APPLICATION
+    logger:
+      name: "io.vertx"
+      level: debug
+      AppenderRef:
+        - ref: CONSOLE
+    logger:
+      name: "org.springframework.web"
+      level: debug
+      AppenderRef:
+        - ref: CONSOLE
+        - ref: APPLICATION
+    logger:
+      name: "org.springframework.core.env.StandardEnvironment"
+      level: info
+      AppenderRef:
+        - ref: CONSOLE
+        - ref: PAYLOAD

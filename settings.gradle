@@ -1,0 +1,3 @@
+rootProject.name = 'mm-platform'
+
+include 'base-spring'
